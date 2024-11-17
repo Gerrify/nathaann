@@ -105,16 +105,12 @@
   background-color: #202c33;
   color: #fff;
 }
-#chat1::after,
-#chat2::after,
-#chat3::after {
-  content: "";
+.arr {
   position: absolute;
   bottom: 6px;
   left: -8px;
   width: 12px;
   height: 12px;
-  background: url(./asset/svg/arrbubble.svg);
 }
 #chatContainer .chat div{
   line-height: 18px;
