@@ -1,10 +1,10 @@
 :root {
   --chat-font: "SFT-Regular";
-  --tl-clr:#fff8f9;
-  --sl-clr:#ffdae0;
+  --tl-clr: #fff8f9;
+  --sl-clr: #ffdae0;
   --p-clr: #ffc0cb;
-  --sd-clr:#ffa7b6; 
-  --td-clr:#191314;
+  --sd-clr: #ffa7b6;
+  --td-clr: #191314;
 }
 @font-face {
   font-family: "SFT-Regular";
@@ -25,6 +25,14 @@
 @media screen and (max-width: 600px) {
 }
 
+.preloader {
+  display: block;
+  width: 100dvh;
+  max-width: 100%;
+  height: 100%;
+  background: #1f1f1f;
+}
+
 #chatScreen {
   position: fixed;
   top: 0;
@@ -34,9 +42,9 @@
   height: 100vh;
   font-family: var(--chat-font);
   background: url(./asset/svg/chat-bg.svg);
-  transition: all .75s ease-in-out;
+  transition: all 0.75s ease-in-out;
 }
-.top-100{
+.top-100 {
   top: -100vh !important;
 }
 
@@ -106,13 +114,14 @@
   color: #fff;
 }
 .arr {
+  display: block;
   position: absolute;
   bottom: 6px;
   left: -8px;
   width: 12px;
   height: 12px;
 }
-#chatContainer .chat div{
+#chatContainer .chat div {
   line-height: 18px;
   width: fit-content;
   transition: all 1s ease-in-out;
@@ -120,7 +129,7 @@
 
 #chatContainer .chat .isichat {
   width: max-content;
-  max-width: 710px; 
+  max-width: 710px;
   display: none;
 }
 
@@ -225,5 +234,3 @@
   align-items: end;
   justify-content: end;
 }
-
-

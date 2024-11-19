@@ -90,17 +90,21 @@ const validate = (e) => {
   }
 };
 
-// Wait for the window to load completely
-window.onload = function() {
-  // Hide the preloader
-  document.getElementById('preloader').style.display = 'none';
+let loadingDone = false;
+const doneLoading = () => {
+  document.getElementById("preloader").style.display = "none";
+  loadingDone = true;
 };
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("form1").addEventListener("submit", validate);
-
+// Wait for the window to load completely
+window.onload = async function () {
+  // Hide the preloader
+  await delay(2000);
+  // Wait until the loading animation is done
+  doneLoading();
+  // Start the time display
   showTime();
-
+  // Start the animation when the loading is done
+  document.getElementById("form1").addEventListener("submit", validate);
+  // Start the animation when the chat screen is shown
   startAnimation();
-});
+};
