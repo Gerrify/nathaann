@@ -1,10 +1,9 @@
 :root {
   --chat-font: "SFT-Regular";
-  --tl-clr: #fff8f9;
-  --sl-clr: #ffdae0;
-  --p-clr: #ffc0cb;
-  --sd-clr: #ffa7b6;
-  --td-clr: #191314;
+  --primary: #5050fd;
+  --secondary: #fdfd50;
+  --white: #f6f6fd;
+  --black: #0d0d06;
 }
 @font-face {
   font-family: "SFT-Regular";
@@ -25,12 +24,18 @@
 @media screen and (max-width: 600px) {
 }
 
-.preloader {
-  display: block;
-  width: 100dvh;
+#preloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100dvw;
   max-width: 100%;
-  height: 100%;
+  height: 100vh;
   background: #1f1f1f;
+  position: relative;
+  z-index: 99999;
+  font: 64px var(--chat-font);
 }
 
 #chatScreen {
@@ -102,24 +107,14 @@
   padding: 12px;
   flex-grow: 1;
 }
-#chatContainer #chat1,
-#chatContainer #chat2,
-#chatContainer #chat3 {
+#chatContainer .chat{
   position: relative;
   max-width: 55%;
   padding: 4px 8px 16px 8px;
   border-radius: 8px;
   margin-bottom: 8px;
-  background-color: #202c33;
+  background-color: #3c3c3e;
   color: #fff;
-}
-.arr {
-  display: block;
-  position: absolute;
-  bottom: 6px;
-  left: -8px;
-  width: 12px;
-  height: 12px;
 }
 #chatContainer .chat div {
   line-height: 18px;
@@ -131,6 +126,14 @@
   width: max-content;
   max-width: 710px;
   display: none;
+}
+#chatContainer .chat::after {
+  content: url("./asset/svg/arr.svg");
+  position: absolute;
+  bottom: 6px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
 }
 
 @keyframes chat-anim {
