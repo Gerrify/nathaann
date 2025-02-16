@@ -13,73 +13,102 @@ const showTime = () => {
   setTimeout(showTime, 10000);
 };
 
-var music = document.getElementById("bgm"),
-  ketik1 = document.getElementById("ketik1"),
-  ketik2 = document.getElementById("ketik2"),
-  ketik3 = document.getElementById("ketik3"),
-  isi1 = document.getElementById("isichat1"),
-  isi2 = document.getElementById("isichat2"),
-  isi3 = document.getElementById("isichat3");
+const music = document.getElementById("bgm"),
+  emoji = new FontFace("emojicon", "url(./asset/font/AppleColorEmoji.ttf)"); 
+(ketik1 = document.getElementById("ketik1")),
+  (ketik2 = document.getElementById("ketik2")),
+  (ketik3 = document.getElementById("ketik3"));
 
-const ketikAnim = async (e) => {
-  const isi = e.nextElementSibling,
-    ortuElement = e.parentElement;
-  e.style.animation = "fade-out 2s";
-  await delay(2000);
-  e.style.display = "none";
-  isi.style.display = "block";
-  isi.style.animation = "fade-in 2s";
-  ortuElement.style.width = `${isi.offsetWidth + 16}px`;
-  ortuElement.style.height = `${isi.offsetHeight + 20}px`;
-};
-const chatAnim = async (e) => {
-  let nextChatBox = e.parentElement.nextElementSibling,
-    chatBoxStyle = e.parentElement.style;
-  while (nextChatBox) {
-    nextChatBox.style.opacity = "0";
-    nextChatBox = nextChatBox.nextElementSibling;
-  }
-  chatBoxStyle.width = `${e.offsetWidth + 16}px`;
-  chatBoxStyle.opacity = "0";
-  chatBoxStyle.animation = "chat-anim .5s";
+const ketikAnim = async (typingElement) => {
+  const chatContainer = typingElement.parentElement;
+  const nextChatBoxes = [...chatContainer.parentElement.children].slice(
+    [...chatContainer.parentElement.children].indexOf(chatContainer) + 1
+  );
+
+  // Fade out all next chat boxes
+  nextChatBoxes.forEach((box) => {
+    box.style.opacity = "0";
+  });
+
+  // Adjust container size and animate typing element
+  chatContainer.style.width = `${typingElement.offsetWidth + 20}px`;
+  chatContainer.style.height = `${typingElement.offsetHeight + 24}px`;
+  chatContainer.style.opacity = "0";
+  chatContainer.style.animation = "chat-anim 0.5s ease-in-out";
   await delay(500);
-  chatBoxStyle.transition = "all 0.25s ease-in-out";
-  chatBoxStyle.opacity = "1";
+
+  // Transition in and adjust size dynamically
+  chatContainer.style.transition = "all 0.25s ease-in-out";
+  chatContainer.style.opacity = "1";
+
+  const chatContentElement = typingElement.nextElementSibling;
+
+  // Typing element fade-out animation
+  typingElement.style.animation = "fade-out 2s";
+  await delay(2000);
+
+  // Swap visibility of typing and chat content
+  typingElement.style.display = "none";
+  chatContentElement.style.display = "block";
+  chatContentElement.style.animation = "fade-in 2s";
+
+  // Adjust chat container size for content
+  chatContainer.style.width = `${chatContentElement.offsetWidth + 20}px`;
+  chatContainer.style.height = `${chatContentElement.offsetHeight + 24}px`;
 };
 
 async function startAnimation() {
-  await chatAnim(ketik1);
   await ketikAnim(ketik1);
   await delay(1000);
-  await chatAnim(ketik2);
   await ketikAnim(ketik2);
   await delay(1000);
-  await chatAnim(ketik3);
   await ketikAnim(ketik3);
 }
 
 // prettier-ignore
 const list = [
-    "cantik","lucu","imut","gemeshh","pooh","pastel","biru","pink","putih","hitam","ungu",
-    "unicorn","nanuna","taruna","mixue","gacoan","udang keju","seafood","bmw","mini cooper",
-    "executive","h&m","colorbox","bunga tulip","tulip","ramdhan","rumdun","joni","uti","akung",
-    "mas angga","and finally","garaa",
+    "cantik","lucu","imut","gemeshh","vw","merah","biru","hologram","putih","hitam","volkswagen",
+    "kimia","itenay","cappucino","hazelnut","matcha","ketoprak","padang","mazda","angga",
+    "anggara","athaya","noor","the panturas","panturas","hindia","feast","baskara","oka","ika",
+    "mawar","rose","light", "jalanan", "photophile"
   ];
 
-let count = 0;
+let count = 1;
 const validate = (e) => {
   e.preventDefault(); // cancel submit
   const answer = document.getElementById("text1").value.trim().toLowerCase();
   console.log(answer, list.includes(answer));
   if (!list.includes(answer)) {
     if (count == 3) {
-      alert(
-        "Seriusan?! lu lupa pw nya seng??? pencet tombol sticker tuh buat liat semua list pw nya."
-      );
-      return;
+      Swal.fire({
+        title: "Jawaban Salah!",
+        text: "Jawabanmu salah, coba cek kata kunci yang benar!",
+        icon: "error",
+        confirmButtonText: "Oke",
+        showClass:{
+          popup: 'animate__animated animate__lightSpeedInRight animate__faster',
+        },
+        hideClass:{
+          popup: 'animate__animated animate__lightSpeedOutRight animate__faster',
+        },
+        position: 'top-end',
+
+      })
+      return
     }
-    alert("pw nya salah!");
     count++;
+    Swal.fire({
+      title: "Jawaban Salah!",
+      text: `Jawabanmu salah, kamu punya ${ 4 - count } kesempatan`,
+      icon: "error",
+      confirmButtonText: "Oke",
+      showClass:{
+        popup: 'animate__animated animate__lightSpeedInRight animate__faster',
+      },
+      hideClass:{
+        popup: 'animate__animated animate__lightSpeedOutRight animate__faster',
+      },
+    })
     return;
   }
   if (list.includes(answer)) {
@@ -90,21 +119,14 @@ const validate = (e) => {
   }
 };
 
-let loadingDone = false;
 const doneLoading = () => {
   document.getElementById("preloader").style.display = "none";
-  loadingDone = true;
 };
 // Wait for the window to load completely
 window.onload = async function () {
-  // Hide the preloader
-  await delay(2000);
-  // Wait until the loading animation is done
-  doneLoading();
-  // Start the time display
   showTime();
-  // Start the animation when the loading is done
-  document.getElementById("form1").addEventListener("submit", validate);
-  // Start the animation when the chat screen is shown
+  await emoji.load();
+  doneLoading();
   startAnimation();
+  document.getElementById("form1").addEventListener("submit", validate);
 };
