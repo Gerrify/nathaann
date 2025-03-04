@@ -193,7 +193,7 @@ line-height: normal !important;
 
 #chatContainer .chat .isichat {
   width: max-content;
-  max-width: 710px;
+  max-width: 690px;
   display: none;
 }
 #chatContainer .chat::after {
