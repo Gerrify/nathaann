@@ -114,7 +114,7 @@ body::-webkit-scrollbar {
   transition: all 0.75s ease-in-out;
 }
 .top-100 {
-  top: -100vh !important;
+  top: -1000vh !important;
 }
 
 /* :profileBar: */
